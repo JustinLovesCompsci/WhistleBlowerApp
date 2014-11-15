@@ -1,0 +1,81 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="com.example.main.whistleblower.PostActivity">
+
+    <Spinner
+        android:id="@+id/harassment_type_dropDown"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="2"
+        android:prompt="@string/prompt_select_type" />
+
+    <Spinner
+        android:id="@+id/harassment_subType_dropDown"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="2"
+        android:prompt="@string/prompt_select_sub_type" />
+
+    <EditText
+        android:id="@+id/message_box"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="4"
+        android:hint="@string/message_box_hint"
+        android:inputType="textMultiLine"
+        android:scrollbars="vertical"
+        android:maxLines="10" />
+
+    <LinearLayout
+        android:id="@+id/harassment_category"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:layout_centerInParent="true">
+
+        <CheckBox
+            android:id="@+id/checkBox_category_verbal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/category_verbal_title" />
+
+        <CheckBox
+            android:id="@+id/checkBox_category_physical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/category_physical_title" />
+
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/checkBox_current_location"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:text="@string/post_current_location"
+        android:checked="true" />
+
+    <Button
+        android:id="@+id/button_post"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:text="@string/post_message_button"
+        android:background="@color/app_blue" />
+
+</LinearLayout>
