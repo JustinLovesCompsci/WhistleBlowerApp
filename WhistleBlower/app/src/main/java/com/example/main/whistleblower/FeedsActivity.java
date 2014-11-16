@@ -26,6 +26,7 @@ public class FeedsActivity extends Activity {
         dataList = new ArrayList<Data>();
         myActivity = this;
         setContentView(R.layout.activity_feeds);
+        BackendService.startActionFetch(this);
         mAdapter = new ListAdapter(this, dataList);
         mListView = (ListView) findViewById(R.id.msg_list);
         mListView.setAdapter(mAdapter);
