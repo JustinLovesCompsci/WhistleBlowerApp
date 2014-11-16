@@ -51,7 +51,8 @@ public class MainActivity extends FragmentActivity {
             if(googleMap==null)
                 return;
             try {
-                googleMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+                SupportMapFragment frag = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
+                googleMap = frag.getMap();
                 googleMap.addMarker(new MarkerOptions()
                         .position(new LatLng(l.getLatitude(), l.getLongitude()))
                         .title("Event")).setVisible(true);
@@ -68,7 +69,7 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        SQLiteHelper.getInstance().getRecentMessages();
         // Getting location manager
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -85,10 +86,6 @@ public class MainActivity extends FragmentActivity {
         }
 
         dataList = new ArrayList<Data>();
-
-
-        // Filling the map with the data
-        populateMap();
 
         // For static access to this activity by thread handler
         myActivity = this;
@@ -119,7 +116,10 @@ public class MainActivity extends FragmentActivity {
             }
         });
         // Getting cached messages
-        SQLiteHelper.getInstance().getRecentMessages();
+
+
+        // Filling the map with the data
+        populateMap();
     }
 
 

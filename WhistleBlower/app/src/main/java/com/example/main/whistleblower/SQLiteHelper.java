@@ -30,7 +30,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     private static final String COLUMN_SUBTYPE = "sub_type";
     private static final String COLUMN_LOCATION = "location";           // GPS coordinate data
     private static final String DATABASE_NAME = "messages.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 1;
 
     /**
      * Representations of the columns in the SQL database
