@@ -46,8 +46,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                     COLUMN_CAT + " TEXT NOT NULL, "  +
                     COLUMN_TYPE + " TEXT NOT NULL, " +
                     COLUMN_SUBTYPE + " TEXT NOT NULL, " +
-                    COLUMN_LOCATION + " TEXT NOT NULL, "  +
-                    "PRIMARY KEY(" + COLUMN_TS + ");";
+                    COLUMN_LOCATION + " TEXT NOT NULL"  +
+                     ");";
 
 
     private static SQLiteHelper myInstance;
