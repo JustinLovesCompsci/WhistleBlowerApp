@@ -5,31 +5,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.widget.ListView;
-
-import com.example.main.whistleblower.models.ListAdapter;
-import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.*;
-
-import java.util.ArrayList;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.ListView;
 
+import com.example.main.whistleblower.models.ListAdapter;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -39,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +58,7 @@ public class MainActivity extends FragmentActivity {
 
         // Starting map services
         setContentView(R.layout.activity_main);
-        googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+        googleMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
 
         // Starting array adapter for message display
         dataList = new ArrayList<Data>();
@@ -126,7 +118,7 @@ public class MainActivity extends FragmentActivity {
      *
      * @return
      */
-    public Handler getHandler(){
+    public Handler getHandler() {
         return new Handler(Looper.getMainLooper()) {
             public void handleMessage(Message m) {
                 Data d = (Data) m.obj;
@@ -142,9 +134,9 @@ public class MainActivity extends FragmentActivity {
         };
     }
 
-    private void placePointsOnMap(List<Location> listOfLocations){
+    private void placePointsOnMap(List<Location> listOfLocations) {
         // A reference of a GoogleMap object exists as instance variable
-        for(Location l : listOfLocations){
+        for (Location l : listOfLocations) {
             String myTitle = "";                // Empty string for title
             googleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(l.getLatitude(), l.getLongitude()))
