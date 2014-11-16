@@ -82,14 +82,14 @@ public class PostActivity extends Activity {
                 if (!validate()) {
                     showNonFilledDialog();
                 }
-                new SubmissionTask().execute("");
+                new SubmissionTask().execute(Constants.DATABASE_URL);
             }
         });
     }
 
     private void constructData() {
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm a");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(Util.TIME_FORMAT);
         myData.setTimeStamp(dateFormat.format(c.getTime()));
     }
 

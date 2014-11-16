@@ -9,6 +9,8 @@ import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 
 import com.example.main.whistleblower.util.SystemUiHider;
 
@@ -116,12 +118,16 @@ public class AnalysisActivity extends Activity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
 //        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+
+        WebView myWebView = (WebView) findViewById(R.id.analysis_view);
+        WebSettings webSettings = myWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        myWebView.loadUrl("http://www.google.com");//TODO: change url
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
         // are available.
