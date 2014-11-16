@@ -33,8 +33,7 @@ public class Util {
         userTime.append(list[1]);
         userTime.append(DATE_SEPARATOR);
         userTime.append(list[2]);
-        userTime.append(DATE_SEPARATOR);
-        userTime.append(" ");
+        userTime.append(" \n");
         userTime.append(list[3].substring(0, 5));
         return userTime.toString();
     }
