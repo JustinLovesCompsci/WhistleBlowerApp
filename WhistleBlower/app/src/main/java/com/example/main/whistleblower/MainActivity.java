@@ -1,6 +1,7 @@
 package com.example.main.whistleblower;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -18,10 +19,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.main.whistleblower.models.ListAdapter;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -49,6 +52,13 @@ public class MainActivity extends FragmentActivity {
     GoogleMap googleMap;
 
     private ListView mListView;
+
+    private BroadcastReceiver mLocationReceiver = new BroadcastReceiver(){
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            SQLiteHelper.getInstance().getRecentMessages();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

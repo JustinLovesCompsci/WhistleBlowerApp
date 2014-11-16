@@ -2,9 +2,19 @@ package com.example.main.whistleblower;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
@@ -18,6 +28,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+
 import org.json.JSONObject;
 
 import java.io.DataOutputStream;
@@ -25,6 +36,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -33,6 +45,23 @@ public class PostActivity extends Activity {
     private Data myData;
     private double myLongitude;
     private double myLatitude;
+    private Location mCurrentLocation;
+    private LocationManager locationManager;
+
+
+    private BroadcastReceiver mLocationReceiver = new BroadcastReceiver(){
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.v(ACTIVITY_SERVICE, "Received broadcast from LocationUpdater");
+            // Decoding the broadcast
+            Bundle extras = intent.getExtras();
+            Location NEW_LOCATION = (Location) extras.get("NEW_LOCATION");
+            // Updating current location
+            mCurrentLocation = NEW_LOCATION;
+        }
+    };
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +70,17 @@ public class PostActivity extends Activity {
         setUpTypeDropDown(R.id.harassment_type_dropDown, R.array.harassment_type_array, true);
         setUpTypeDropDown(R.id.harassment_subType_dropDown, R.array.sexism_subType_array, false);//default subtypes
         myData = new Data();
+        LocationListener mLocationListener = new LocationUpdater();
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLocationReceiver, new IntentFilter("LOCATION_UPDATE"));
+        final LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if(locationManager==null){
+            Toast.makeText(getApplicationContext(),"location manager is null!",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Looper looper = null;
+        locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER,mLocationListener, looper);
 
         CheckBox myLocation = (CheckBox) findViewById(R.id.checkBox_current_location);
         myLocation.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +112,18 @@ public class PostActivity extends Activity {
                 myData.setMessage(((EditText) findViewById(R.id.message_box)).getText().toString());
                 myData.setLocation("1.0:1.0");//TODO: dummy content
                 //TODO: check
+
+                Location location = getLocation();
+
+                if(location==null){
+                    Toast.makeText(getApplicationContext(),"location is null!",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                double longitude = location.getLongitude();
+                double latitude = location.getLatitude();
+                myData.setLocation(longitude + Util.SEPARATOR + latitude);
+
 //                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 //                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 //                double longitude = location.getLongitude();
@@ -84,6 +136,25 @@ public class PostActivity extends Activity {
                 new SubmissionTask().execute(Constants.DATABASE_URL);
             }
         });
+    }
+
+    public Location getLocation(){
+        if(mCurrentLocation!=null)
+            return mCurrentLocation;
+
+        List<String> providers = locationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            Location l = locationManager.getLastKnownLocation(provider);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                // Found best last known location: %s", l);
+                bestLocation = l;
+            }
+        }
+        return bestLocation;
     }
 
     private void constructData() {
