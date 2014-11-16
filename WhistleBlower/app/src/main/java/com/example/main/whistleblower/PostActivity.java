@@ -95,7 +95,7 @@ public class PostActivity extends Activity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("Daniel","sendButton");
+                Log.d("Daniel", "sendButton");
                 StringBuilder category = new StringBuilder();
                 boolean physicalChecked = ((CheckBox) findViewById(R.id.checkBox_category_physical)).isChecked();
                 boolean verbalChecked = ((CheckBox) findViewById(R.id.checkBox_category_verbal)).isChecked();
@@ -118,14 +118,14 @@ public class PostActivity extends Activity {
                     return;
                 }
 
-                myData.setLocation(Util.appendCoordinates(location.getLongitude(),location.getLongitude()));
+                myData.setLocation(Util.appendCoordinates(location.getLongitude(), location.getLongitude()));
 
                 if (!validate()) {
                     showNonFilledDialog();
                     myData.clear();
                     return;
                 }
-                Toast.makeText(getApplicationContext(),"Report posted",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Report posted", Toast.LENGTH_SHORT).show();
                 new SubmissionTask().execute(Constants.DATABASE_URL);
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(i);
@@ -286,7 +286,7 @@ public class PostActivity extends Activity {
             }
             conn.disconnect();
         } catch (IOException e) {
-            e.printStackTrace();//TODO
+            e.printStackTrace();
         }
         return "Success";
     }
@@ -305,6 +305,7 @@ public class PostActivity extends Activity {
                 json.accumulate(Constants.TIME_STAMP, myData.getTimeStamp());
             } catch (Exception e) {
                 e.printStackTrace();
+                return "";
             }
             return post(urls[0], json);
         }

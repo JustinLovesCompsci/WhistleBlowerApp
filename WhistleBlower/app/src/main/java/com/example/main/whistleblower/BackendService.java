@@ -69,6 +69,7 @@ public class BackendService extends IntentService {
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
+            
             in.close();
 
             Log.w("FetchDataTask", response.toString());

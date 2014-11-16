@@ -62,7 +62,6 @@ public class FeedsActivity extends Activity {
         return new Handler(Looper.getMainLooper()) {
             public void handleMessage(Message m) {
                 Data d = (Data) m.obj;
-                d.setTimeStamp(Util.convertDataTimeToUserTime(d.getTimeStamp()));
                 if (dataList.size() >= 30) {
                     dataList.remove(29);
                 }
