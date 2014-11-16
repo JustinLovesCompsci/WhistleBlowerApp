@@ -186,18 +186,27 @@ public class MainActivity extends FragmentActivity {
                     response.append(inputLine);
                 }
                 in.close();
-                Log.w("MainActivity", response.toString());
 
-                JsonElement jsonElement = new JsonParser().parse(response.toString());
-                JsonObject jsonObject = jsonElement.getAsJsonObject();
-                for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
-                    String type = entry.getValue().getAsJsonObject().get(Constants.TYPE).toString().replace("\"", "");
-                    String sub_type = entry.getValue().getAsJsonObject().get(Constants.SUB_TYPE).toString().replace("\"", "");
-                    String message = entry.getValue().getAsJsonObject().get(Constants.MESSAGE).toString().replace("\"", "");
-                    String category = entry.getValue().getAsJsonObject().get(Constants.CATEGORY).toString().replace("\"", "");
-                    String timestamp = entry.getValue().getAsJsonObject().get(Constants.TIME_STAMP).toString().replace("\"", "");
-                    String location = entry.getValue().getAsJsonObject().get(Constants.LOCATION).toString().replace("\"", "");
-                    SQLiteHelper.getInstance().insertEntry(message, timestamp, category, type, sub_type, location);
+                Log.w("FetchDataTask", response.toString());
+
+                if (!response.toString().equals("null")) {
+                    JsonElement jsonElement = new JsonParser().parse(response.toString());
+                    JsonObject jsonObject = jsonElement.getAsJsonObject();
+                    for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
+                        String type = entry.getValue().getAsJsonObject().get(Constants.TYPE).toString().replace("\"", "");
+                        Log.w("FetchDataTask type:", type);
+                        String sub_type = entry.getValue().getAsJsonObject().get(Constants.SUB_TYPE).toString().replace("\"", "");
+                        Log.w("FetchDataTask sub_type:", sub_type);
+                        String message = entry.getValue().getAsJsonObject().get(Constants.MESSAGE).toString().replace("\"", "");
+                        Log.w("FetchDataTask message:", message);
+                        String category = entry.getValue().getAsJsonObject().get(Constants.CATEGORY).toString().replace("\"", "");
+                        Log.w("FetchDataTask category:", category);
+                        String timestamp = entry.getValue().getAsJsonObject().get(Constants.TIME_STAMP).toString().replace("\"", "");
+                        Log.w("FetchDataTask timestamp:", timestamp);
+                        String location = entry.getValue().getAsJsonObject().get(Constants.LOCATION).toString().replace("\"", "");
+                        Log.w("FetchDataTask location:", location);
+                        SQLiteHelper.getInstance().insertEntry(message, null, timestamp, category, type, sub_type, location);
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
