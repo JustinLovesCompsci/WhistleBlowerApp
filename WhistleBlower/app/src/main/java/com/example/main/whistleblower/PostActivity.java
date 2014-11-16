@@ -49,7 +49,21 @@ public class PostActivity extends Activity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                constructData();
+                StringBuilder category = new StringBuilder();
+                boolean physicalChecked = ((CheckBox) findViewById(R.id.checkBox_category_physical)).isChecked();
+                boolean verbalChecked = ((CheckBox) findViewById(R.id.checkBox_category_verbal)).isChecked();
+                if (physicalChecked && verbalChecked) {
+                    category.append(Constants.PHYSICAL);
+                    category.append(Util.SEPARATOR);
+                    category.append(Constants.VERBAL);
+                } else if (physicalChecked) {
+                    category.append(Constants.PHYSICAL);
+                } else if (verbalChecked) {
+                    category.append(Constants.VERBAL);
+                }
+                myData.setCategory(category.toString());
+                myData.setMessage(((EditText) findViewById(R.id.message_box)).getText().toString());
+                myData.setLocation("1.0:1.0");//TODO: set location
                 if (!validate()) {
                     showNonFilledDialog();
                 }
@@ -59,21 +73,6 @@ public class PostActivity extends Activity {
     }
 
     private void constructData() {
-        StringBuilder category = new StringBuilder();
-        boolean physicalChecked = ((CheckBox) findViewById(R.id.checkBox_category_physical)).isChecked();
-        boolean verbalChecked = ((CheckBox) findViewById(R.id.checkBox_category_verbal)).isChecked();
-        if (physicalChecked && verbalChecked) {
-            category.append(Constants.PHYSICAL);
-            category.append(Util.SEPARATOR);
-            category.append(Constants.VERBAL);
-        } else if (physicalChecked) {
-            category.append(Constants.PHYSICAL);
-        } else if (verbalChecked) {
-            category.append(Constants.VERBAL);
-        }
-        myData.setCategory(category.toString());
-        myData.setMessage(((EditText) findViewById(R.id.message_box)).getText().toString());
-//            data.setLocation();//TODO: set location
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm a");
         myData.setTimeStamp(dateFormat.format(c.getTime()));
@@ -92,12 +91,15 @@ public class PostActivity extends Activity {
         builder.show();
     }
 
+    /**
+     * Message box is not required
+     *
+     * @return
+     */
     private boolean validate() {
         if (myData.getType() == null || myData.getType().trim().equals("")) {
             return false;
         } else if (myData.getSub_Type() == null || myData.getSub_Type().trim().equals("")) {
-            return false;
-        } else if (myData.getTimeStamp() == null || myData.getTimeStamp().trim().equals("")) {
             return false;
         } else if (myData.getCategory() == null || myData.getCategory().trim().equals("")) {
             return false;
@@ -184,6 +186,7 @@ public class PostActivity extends Activity {
     private class SubmissionTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
+            constructData();
             JSONObject json = new JSONObject();
             try {
                 json.accumulate(Constants.TYPE, myData.getType());
@@ -200,6 +203,7 @@ public class PostActivity extends Activity {
         @Override
         protected void onPostExecute(String result) {
             Log.w("PostActivity", "Message Sent");
+            finish();
         }
     }
 }
