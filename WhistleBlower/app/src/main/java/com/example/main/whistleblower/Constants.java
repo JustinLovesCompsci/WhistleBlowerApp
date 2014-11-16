@@ -15,6 +15,6 @@ public class Constants {
     public static final String LOCATION = "Location";
     public static final String TIME_STAMP = "Time_Stamp";
 
-    public static final String DATABASE_URL = "";
+    public static final String DATABASE_URL = "https://scorching-fire-8150.firebaseio.com/wb/events.json";
     public static final String ANALYSIS_URL = "www.google.com";
 }

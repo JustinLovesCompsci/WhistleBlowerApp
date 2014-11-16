@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     private static final String COLUMN_SUBTYPE = "sub_type";
     private static final String COLUMN_LOCATION = "location";           // GPS coordinate data
     private static final String DATABASE_NAME = "messages.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
     /**
      * Representations of the columns in the SQL database
@@ -43,7 +44,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     private static final String DATABASE_CREATE =
             "CREATE TABLE " + TABLE_MESSAGES + "(" +
                     COLUMN_CONTENT + " TEXT NOT NULL, " +
-                    COLUMN_TS + " TEXT NOT NULL, " +
+                    COLUMN_TS + " TEXT NOT NULL UNIQUE, " +
                     COLUMN_CAT + " TEXT NOT NULL, " +
                     COLUMN_TYPE + " TEXT NOT NULL, " +
                     COLUMN_SUBTYPE + " TEXT NOT NULL, " +
@@ -111,6 +112,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
+                Log.d("Daniel", "Syncing with main activity");
                 List<Data> messages = new ArrayList<Data>();
                 Cursor cursor = getWritableDatabase().query(
                         SQLiteHelper.TABLE_MESSAGES,
