@@ -24,21 +24,17 @@ public class ListAdapter extends ArrayAdapter<Data> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-
         Data msg = getItem(position);
 
         convertView = LayoutInflater.from(getContext())
                 .inflate(R.layout.item_layout, parent, false);
 
-        TextView header = (TextView) convertView.findViewById(R.id.secondLine);
-        TextView content = (TextView) convertView.findViewById(R.id.thirdLine);
+        TextView header = (TextView) convertView.findViewById(R.id.firstLine);
+        TextView content = (TextView) convertView.findViewById(R.id.secondLine);
 
         header.setText("Time: " + msg.getTimeStamp() + "--" + " Action: " + msg.getCategory());
         content.setText(msg.getMessage());
 
         return convertView;
     }
-
-
-
 }

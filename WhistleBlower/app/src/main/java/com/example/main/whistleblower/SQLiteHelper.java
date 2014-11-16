@@ -1,8 +1,5 @@
 package com.example.main.whistleblower;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -11,7 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -90,7 +88,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
      * @param msgID message id
      * @param msgTS message timestamp
      */
-    public synchronized void insertEntry(String msgContent, String msgID, String msgTS, String cat,
+    public synchronized void insertEntry(String msgContent, String msgTS, String cat,
                                          String type, String subtype, String loc) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();

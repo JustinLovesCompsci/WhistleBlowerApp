@@ -56,18 +56,11 @@ public class MainActivity extends FragmentActivity {
 
         // For static access to this activity by thread handler
         myActivity = this;
-    }
 
-    private void placePointsOnMap(List<Location> listOfLocations){
-        // A reference of a GoogleMap object exists as instance variable
-        for(Location l : listOfLocations){
-            String myTitle = "";                // Empty string for title
-            googleMap.addMarker(new MarkerOptions()
-                     .position(new LatLng(l.getLatitude(), l.getLongitude()))
-                     .title(myTitle));
-        }
-    }
+        // Getting cached messages
+        SQLiteHelper.getInstance().getRecentMessages();
 
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -86,7 +79,6 @@ public class MainActivity extends FragmentActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     public static Activity getMyActivity(){
         return myActivity;
@@ -110,6 +102,28 @@ public class MainActivity extends FragmentActivity {
                 mAdapter.notifyDataSetChanged();
             }
         };
+    }
+
+    private void placePointsOnMap(List<Location> listOfLocations){
+        // A reference of a GoogleMap object exists as instance variable
+        for(Location l : listOfLocations){
+            String myTitle = "";                // Empty string for title
+            googleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(l.getLatitude(), l.getLongitude()))
+                    .title(myTitle));
+        }
+    }
+
+    private void populateMap(){
+        if(dataList.isEmpty() || googleMap==null)
+            return;
+        String location = null;
+        for(Data d : dataList){
+            location = d.getLocation();
+            googleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(Util.convertToLatitude(location),
+                                         Util.convertToLongtitude(location))));
+        }
     }
 
 }
