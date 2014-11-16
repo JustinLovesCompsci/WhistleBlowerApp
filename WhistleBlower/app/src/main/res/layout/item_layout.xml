@@ -2,9 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="80dp"
-    android:padding="6dip">
-
-    <!-- This is the header info of the message -->
+    android:padding="6dp">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -16,7 +14,8 @@
 
         <TextView
             android:id="@+id/timestampBox"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="2"
             android:layout_height="wrap_content"
             android:layout_alignWithParentIfMissing="true"
             android:gravity="left|center_vertical"
@@ -32,9 +31,11 @@
 
         <TextView
             android:id="@+id/typeBox"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="2"
             android:layout_height="wrap_content"
             android:text="@string/type"
+            android:layout_gravity="center"
             android:textSize="12dp"
             android:paddingLeft="5dp"
             android:paddingTop="5dp"
@@ -43,11 +44,12 @@
 
         <TextView
             android:id="@+id/categoryBox"
-            android:layout_width="117dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/category"
             android:textSize="12dp"
-            android:gravity="right"
+            android:gravity="center"
             android:layout_gravity="right"
             android:paddingLeft="5dp"
             android:paddingTop="5dp"
@@ -67,8 +69,5 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:padding="5dp" />
-
-    <!-- This is the actual content of the message -->
-
 
 </RelativeLayout>
