@@ -23,14 +23,14 @@ public class Data implements Comparable<Data> {
 
     }
 
-    public Data(String id, String timestamp, String msg,
-                String mLocation, String mCategory, String mType, String mSub_Type) {
-        TimeStamp = convertTime(Long.parseLong(timestamp));
+    public Data(String msg,   String timestamp, String mCategory,
+                String mType, String mSub_Type, String mLocation) {
         Message = msg;
-        Location = mLocation;
+        TimeStamp = convertTime(Long.parseLong(timestamp));
         Category = mCategory;
         Type = mType;
         Sub_Type = mSub_Type;
+        Location = mLocation;
     }
 
     private String convertTime(long time) {

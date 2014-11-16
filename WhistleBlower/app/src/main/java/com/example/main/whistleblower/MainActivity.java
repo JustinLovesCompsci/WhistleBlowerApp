@@ -6,14 +6,24 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+
+import java.util.Collections;
+import java.util.List;
 
 
 public class MainActivity extends Activity implements View.OnClickListener {
+
+    private static MainActivity myActivity;
+    private static List<Data> dataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        myActivity = this;
 //        getFragmentManager().beginTransaction()
 //                .add(R.id.container, new MapFragment()).commit();
     }
@@ -41,4 +51,27 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public void onClick(View view) {
 
     }
+
+    public static Activity getMyActivity(){
+        return myActivity;
+    }
+
+    /**
+     * Handler used for updating the ListView
+     * @return
+     */
+    public android.os.Handler getHandler(){
+        return new Handler(Looper.getMainLooper()) {
+            public void handleMessage(Message m) {
+                Data d = (Data) m.obj;
+                if (dataList.size() >= 20) {
+                    dataList.remove(19);
+                }
+                dataList.add(d);
+                Collections.sort(dataList);
+//                listAdapter.notifyDataSetChanged();
+            }
+        };
+    }
+
 }
