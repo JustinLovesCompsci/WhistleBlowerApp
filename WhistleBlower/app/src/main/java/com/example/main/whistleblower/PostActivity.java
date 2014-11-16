@@ -111,7 +111,7 @@ public class PostActivity extends Activity {
                 myData.setCategory(category.toString());
                 myData.setMessage(((EditText) findViewById(R.id.message_box)).getText().toString());
 
-                LocationManager  ml = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                LocationManager ml = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                 Location location = getLocation(ml);
 
                 if (location == null) {
@@ -123,7 +123,6 @@ public class PostActivity extends Activity {
 
                 if (!validate()) {
                     showNonFilledDialog();
-                    myData.clear();
                     return;
                 }
                 Toast.makeText(getApplicationContext(), "Report posted", Toast.LENGTH_SHORT).show();
@@ -132,6 +131,12 @@ public class PostActivity extends Activity {
                 startActivity(i);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        myData.clear();
+        super.onResume();
     }
 
     public Location getLocation(LocationManager manager) {
