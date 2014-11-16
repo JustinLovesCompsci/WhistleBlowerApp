@@ -3,14 +3,12 @@ package com.example.main.whistleblower;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * Created by daniel on 11/15/14.
  */
 public class Data implements Comparable<Data> {
 
-    private String ID;
     private String TimeStamp;
     private String Message;
     private String Location;
@@ -21,13 +19,12 @@ public class Data implements Comparable<Data> {
     /**
      * Allowing empty constructor
      */
-    public Data(){
+    public Data() {
 
     }
 
     public Data(String id, String timestamp, String msg,
-                String mLocation, String mCategory, String mType, String mSub_Type){
-        ID = id;
+                String mLocation, String mCategory, String mType, String mSub_Type) {
         TimeStamp = convertTime(Long.parseLong(timestamp));
         Message = msg;
         Location = mLocation;
@@ -36,7 +33,7 @@ public class Data implements Comparable<Data> {
         Sub_Type = mSub_Type;
     }
 
-    private String convertTime(long time){
+    private String convertTime(long time) {
         Date date = new Date(time);
         Format format = new SimpleDateFormat("yyyy MM dd HH:mm:ss");
         return format.format(date);
@@ -54,14 +51,6 @@ public class Data implements Comparable<Data> {
 
     public String getTimeStamp() {
         return TimeStamp;
-    }
-
-    public String getID() {
-        return ID;
-    }
-
-    public void setID(String ID) {
-        this.ID = ID;
     }
 
     public void setTimeStamp(String timeStamp) {
