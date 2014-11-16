@@ -16,7 +16,6 @@
         android:layout_gravity="center_horizontal"
         android:textColor="@color/app_blue"
         android:textStyle="bold"
-        android:textSize="18dp"
         android:textAlignment="center"
         android:text="You are not alone. You will be believed." />
 

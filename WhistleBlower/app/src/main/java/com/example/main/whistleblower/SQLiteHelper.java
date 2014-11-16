@@ -94,7 +94,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(SQLiteHelper.COLUMN_CONTENT, msgContent);
-        values.put(SQLiteHelper.COLUMN_TS, msgTS);
+        values.put(SQLiteHelper.COLUMN_TS, Util.convertDataTimeToUserTime(msgTS));
         values.put(SQLiteHelper.COLUMN_CAT, cat);
         values.put(SQLiteHelper.COLUMN_TYPE, type);
         values.put(SQLiteHelper.COLUMN_SUBTYPE, subtype);
@@ -142,6 +142,16 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                     Handler handler = main.getHandler();
                     Message m = Message.obtain(handler, 0, d);
                     m.sendToTarget();
+                }
+
+                // Sending each message to the main thread
+                for (Data d : messages) {
+                    FeedsActivity main = (FeedsActivity) FeedsActivity.getMyActivity();
+                    if (main != null) {
+                        Handler handler = main.getHandler();
+                        Message m = Message.obtain(handler, 0, d);
+                        m.sendToTarget();
+                    }
                 }
                 return null;
             }

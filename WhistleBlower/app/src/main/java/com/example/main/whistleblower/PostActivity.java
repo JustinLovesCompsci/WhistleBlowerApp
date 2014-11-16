@@ -7,10 +7,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
@@ -27,7 +27,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 
 import org.json.JSONObject;
 
@@ -49,7 +48,7 @@ public class PostActivity extends Activity {
     private LocationManager locationManager;
 
 
-    private BroadcastReceiver mLocationReceiver = new BroadcastReceiver(){
+    private BroadcastReceiver mLocationReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.v(ACTIVITY_SERVICE, "Received broadcast from LocationUpdater");
@@ -60,6 +59,7 @@ public class PostActivity extends Activity {
             mCurrentLocation = NEW_LOCATION;
         }
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,13 +72,13 @@ public class PostActivity extends Activity {
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mLocationReceiver, new IntentFilter("LOCATION_UPDATE"));
         final LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if(locationManager==null){
-            Toast.makeText(getApplicationContext(),"location manager is null!",Toast.LENGTH_LONG).show();
+        if (locationManager == null) {
+            Toast.makeText(getApplicationContext(), "location manager is null!", Toast.LENGTH_LONG).show();
             return;
         }
 
         Looper looper = null;
-        locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER,mLocationListener, looper);
+        locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, mLocationListener, looper);
 
         CheckBox myLocation = (CheckBox) findViewById(R.id.checkBox_current_location);
         myLocation.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +91,7 @@ public class PostActivity extends Activity {
         });
 
         Button sendButton = (Button) findViewById(R.id.button_post);
+        sendButton.setTextColor(Color.WHITE);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,8 +113,8 @@ public class PostActivity extends Activity {
 
                 Location location = getLocation();
 
-                if(location==null){
-                    Toast.makeText(getApplicationContext(),"location is null!",Toast.LENGTH_LONG).show();
+                if (location == null) {
+                    Toast.makeText(getApplicationContext(), "location is null!", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -132,8 +133,8 @@ public class PostActivity extends Activity {
         });
     }
 
-    public Location getLocation(){
-        if(mCurrentLocation!=null)
+    public Location getLocation() {
+        if (mCurrentLocation != null)
             return mCurrentLocation;
 
         List<String> providers = locationManager.getProviders(true);
