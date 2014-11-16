@@ -85,7 +85,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
      * instance without additional setup. Database updates automatically.
      *
      * @param msgContent message body
-     * @param msgID message id
      * @param msgTS message timestamp
      */
     public synchronized void insertEntry(String msgContent, String msgTS, String cat,
