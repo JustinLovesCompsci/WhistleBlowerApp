@@ -205,7 +205,7 @@ public class MainActivity extends FragmentActivity {
                         Log.w("FetchDataTask timestamp:", timestamp);
                         String location = entry.getValue().getAsJsonObject().get(Constants.LOCATION).toString().replace("\"", "");
                         Log.w("FetchDataTask location:", location);
-                        SQLiteHelper.getInstance().insertEntry(message, null, timestamp, category, type, sub_type, location);
+                        SQLiteHelper.getInstance().insertEntry(message, timestamp, category, type, sub_type, location);
                     }
                 }
             } catch (IOException e) {
