@@ -124,6 +124,8 @@ public class AnalysisActivity extends Activity {
         myWebView.setWebViewClient(new WebViewClient());
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setSupportZoom(true);
+        webSettings.setDomStorageEnabled(true);
         myWebView.loadUrl(Constants.ANALYSIS_URL);
     }
 

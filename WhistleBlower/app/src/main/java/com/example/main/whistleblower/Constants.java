@@ -16,5 +16,5 @@ public class Constants {
     public static final String TIME_STAMP = "Time_Stamp";
 
     public static final String DATABASE_URL = "";
-    public static final String ANALYSIS_URL = "www.google.com";
+    public static final String ANALYSIS_URL = "http://www.google.com";
 }
