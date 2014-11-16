@@ -123,7 +123,7 @@ public class PostActivity extends Activity {
 
                 if (!validate()) {
                     showNonFilledDialog();
-                    myData.clear();
+//                    myData.clear();
                     return;
                 }
                 Toast.makeText(getApplicationContext(), "Report posted", Toast.LENGTH_SHORT).show();
@@ -141,7 +141,7 @@ public class PostActivity extends Activity {
         List<String> providers = manager.getProviders(true);
         Location bestLocation = null;
         for (String provider : providers) {
-            Location l = locationManager.getLastKnownLocation(provider);
+            Location l = manager.getLastKnownLocation(provider);
             if (l == null) {
                 continue;
             }
