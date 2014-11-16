@@ -29,6 +29,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -66,7 +67,12 @@ public class MainActivity extends FragmentActivity {
 
         // Starting map services
         setContentView(R.layout.activity_main);
-        googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+        SupportMapFragment myFrag = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
+        try {
+            googleMap = myFrag.getMap();
+        } catch(Exception ex){
+            Toast.makeText(this,"error rendering map",).;
+        }
 
         // Starting array adapter for message display
         dataList = new ArrayList<Data>();
