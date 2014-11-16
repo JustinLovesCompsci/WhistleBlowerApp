@@ -18,7 +18,7 @@ public class Constants {
     public static final String BROADCAST_ACTION = "com.example.main.whistleblower.BROADCAST";
     public static final String EXTENDED_DATA_STATUS = "com.example.main.whistleblower.STATUS";
     public static final String FETCH_COMPLETE = "com.example.main.whistleblower.COMPLETE";
-    public static final String DATABASE_URL = "https://scorching-fire-8150.firebaseio.com/wb/events.json";
-    public static final String ANALYSIS_URL = "http://www.cs.duke.edu/~maxdml/WebPage/WhistleBlower.html";
+    public static final String DATABASE_URL = "";
+    public static final String ANALYSIS_URL = "http://www.google.com";
 
 }
