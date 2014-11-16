@@ -26,12 +26,12 @@ public class BackendService extends IntentService {
     private static final String ACTION_FETCH_DATA = "com.example.main.whistleblower.action.FETCH";
 
     /**
-     * Starts this service to perform action Foo with the given parameters. If
+     * Starts this service to perform action Fetch with the given parameters. If
      * the service is already performing a task this action will be queued.
      *
      * @see IntentService
      */
-    public static void startActionFoo(Context context, String param1, String param2) {
+    public static void startActionFetch(Context context) {
         Intent intent = new Intent(context, BackendService.class);
         intent.setAction(ACTION_FETCH_DATA);
         context.startService(intent);

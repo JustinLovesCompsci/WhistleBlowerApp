@@ -92,6 +92,8 @@ public class MainActivity extends FragmentActivity {
 
         initFetchDataTask();
         dataList = new ArrayList<Data>();
+        BackendService.startActionFetch(this);
+        
         Button feedsButton = (Button) findViewById(R.id.button_see_feeds);
         feedsButton.setOnClickListener(new View.OnClickListener() {
             @Override
