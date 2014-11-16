@@ -20,7 +20,6 @@ public class Data implements Comparable<Data> {
      * Allowing empty constructor
      */
     public Data() {
-
     }
 
     public Data(String msg, String timestamp, String mCategory,

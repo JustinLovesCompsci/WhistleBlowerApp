@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="80dp"
-    android:padding="6dip" >
+    android:padding="6dip">
 
     <!-- This is the header info of the message -->
 
