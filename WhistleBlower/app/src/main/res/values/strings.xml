@@ -12,7 +12,7 @@
     <string name="category_physical_title">Physical</string>
     <string name="category_verbal_title">Verbal</string>
     <string name="post_current_location">Use Current Location</string>
-    <string name="post_message_button">Submit</string>
+    <string name="post_message_button">Send</string>
 
     <string-array name="harassment_type_array">
         <item>Racism</item>
