@@ -3,6 +3,7 @@ package com.example.main.whistleblower;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.Menu;
@@ -18,7 +19,6 @@ import android.widget.Toast;
 
 public class PostActivity extends Activity {
 
-    private CheckBox myLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class PostActivity extends Activity {
         setUpTypeDropDown(R.id.harassment_type_dropDown, R.array.harassment_type_array, true);
         setUpTypeDropDown(R.id.harassment_subType_dropDown, R.array.sexism_subType_array, false);//default subtypes
 
-        myLocation = (CheckBox) findViewById(R.id.checkBox_current_location);
+        CheckBox myLocation = (CheckBox) findViewById(R.id.checkBox_current_location);
         myLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -36,6 +36,8 @@ public class PostActivity extends Activity {
                 }
             }
         });
+
+
     }
 
     private void showLocationDialog() {
@@ -105,6 +107,22 @@ public class PostActivity extends Activity {
 
         public void onNothingSelected(AdapterView<?> parent) {
             // Another interface callback
+        }
+    }
+
+    private class SubmissionTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            person = new Person();
+            person.setName(etName.getText().toString());
+            person.setCountry(etCountry.getText().toString());
+            person.setTwitter(etTwitter.getText().toString());
+            return post(urls[0], person);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Toast.makeText(getBaseContext(), "Message Sent", Toast.LENGTH_LONG).show();
         }
     }
 }
