@@ -1,4 +1,4 @@
-package com.example.main.whistleblower.models;
+package com.example.main.whistleblower;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -9,8 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import com.example.main.whistleblower.models.ListAdapter;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,6 +30,7 @@ public class FeedsActivity extends Activity {
         mAdapter = new ListAdapter(this, dataList);
         mListView = (ListView) findViewById(R.id.msg_list);
         mListView.setAdapter(mAdapter);
+        SQLiteHelper.getInstance().getRecentMessages();
     }
 
     @Override

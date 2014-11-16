@@ -42,14 +42,15 @@ public class MainActivity extends FragmentActivity {
     private BroadcastReceiver mLocationReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            SQLiteHelper.getInstance().getRecentMessages();
+            
             Bundle extras = intent.getExtras();
             Location l = (Location) extras.get("NEW_LOCATION");
             Log.d("Daniel","requesting updates from sql database");
             if(googleMap==null)
                 return;
             try {
-                googleMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+                SupportMapFragment frag = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
+                googleMap = frag.getMap();
                 googleMap.addMarker(new MarkerOptions()
                         .position(new LatLng(l.getLatitude(), l.getLongitude()))
                         .title("Event")).setVisible(true);
@@ -84,10 +85,6 @@ public class MainActivity extends FragmentActivity {
 
         dataList = new ArrayList<Data>();
 
-
-        // Filling the map with the data
-        populateMap();
-
         // For static access to this activity by thread handler
         myActivity = this;
 
@@ -120,6 +117,9 @@ public class MainActivity extends FragmentActivity {
         });
         // Getting cached messages
         SQLiteHelper.getInstance().getRecentMessages();
+
+        // Filling the map with the data
+        populateMap();
     }
 
 
