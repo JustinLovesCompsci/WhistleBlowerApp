@@ -18,21 +18,29 @@ public class ListAdapter extends ArrayAdapter<Data> {
 
     public ListAdapter(Context context, List<Data> objects) {
 
-        super(context, R.layout.item_layout, R.id.secondLine, objects);
+        super(context, R.layout.item_layout, objects);
 
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
+        // The data
         Data msg = getItem(position);
 
         convertView = LayoutInflater.from(getContext())
                 .inflate(R.layout.item_layout, parent, false);
 
-        TextView header = (TextView) convertView.findViewById(R.id.firstLine);
-        TextView content = (TextView) convertView.findViewById(R.id.secondLine);
+        // Data for the headers
+        TextView category = (TextView) convertView.findViewById(R.id.categoryBox);
+        TextView timestamp = (TextView) convertView.findViewById(R.id.timestampBox);
+        TextView type = (TextView) convertView.findViewById(R.id.typeBox);
 
-        header.setText("Time: " + msg.getTimeStamp() + "--" + " Action: " + msg.getCategory());
+        // Where message will be displayed
+        TextView content = (TextView) convertView.findViewById(R.id.message_box);
+
+        category.setText(msg.getCategory());
+        timestamp.setText(msg.getTimeStamp());
+        type.setText(msg.getType());
         content.setText(msg.getMessage());
 
         return convertView;
