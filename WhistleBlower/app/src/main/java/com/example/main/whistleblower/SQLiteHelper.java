@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 /**
  * An extension of the SQLiteOpenHelper helper class to manage SQLite database
  * creation and data management. Implemented as a Singleton.
- *
+ * <p/>
  * Created by daniel on 11/15/14.
  */
 public class SQLiteHelper extends SQLiteOpenHelper {
@@ -24,30 +25,30 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     private static final String COLUMN_CONTENT = "msg_content";         // Message content
     private static final String COLUMN_TS = "msg_ts";                   // Timestamp
     private static final String COLUMN_CAT = "category";
-    private static final String COLUMN_TYPE =  "type";
+    private static final String COLUMN_TYPE = "type";
     private static final String COLUMN_SUBTYPE = "sub_type";
     private static final String COLUMN_LOCATION = "location";           // GPS coordinate data
     private static final String DATABASE_NAME = "messages.db";
     private static final int DATABASE_VERSION = 1;
 
-    /***
+    /**
      * Representations of the columns in the SQL database
      */
     private static String[] ALL_COLUMNS = {
-            COLUMN_CONTENT, COLUMN_TS, COLUMN_CAT, COLUMN_TYPE, COLUMN_SUBTYPE, COLUMN_LOCATION };
+            COLUMN_CONTENT, COLUMN_TS, COLUMN_CAT, COLUMN_TYPE, COLUMN_SUBTYPE, COLUMN_LOCATION};
 
     /**
      * String to create SQL database
      */
     private static final String DATABASE_CREATE =
             "CREATE TABLE " + TABLE_MESSAGES + "(" +
-                    COLUMN_CONTENT + " TEXT NOT NULL, "  +
-                    COLUMN_TS + " TEXT NOT NULL, "  +
-                    COLUMN_CAT + " TEXT NOT NULL, "  +
+                    COLUMN_CONTENT + " TEXT NOT NULL, " +
+                    COLUMN_TS + " TEXT NOT NULL, " +
+                    COLUMN_CAT + " TEXT NOT NULL, " +
                     COLUMN_TYPE + " TEXT NOT NULL, " +
                     COLUMN_SUBTYPE + " TEXT NOT NULL, " +
-                    COLUMN_LOCATION + " TEXT NOT NULL"  +
-                     ");";
+                    COLUMN_LOCATION + " TEXT NOT NULL" +
+                    ");";
 
 
     private static SQLiteHelper myInstance;
@@ -85,7 +86,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
      * instance without additional setup. Database updates automatically.
      *
      * @param msgContent message body
-     * @param msgTS message timestamp
+     * @param msgTS      message timestamp
      */
     public synchronized void insertEntry(String msgContent, String msgTS, String cat,
                                          String type, String subtype, String loc) {
@@ -107,7 +108,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
      * received. Runs in background thread.
      */
     public synchronized void getRecentMessages() {
-        new AsyncTask<Void, Void, String>(){
+        new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
                 List<Data> messages = new ArrayList<Data>();
@@ -127,7 +128,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                     String type = cursor.getString(3);
                     String subtype = cursor.getString(4);
                     String loc = cursor.getString(5);
-                    Data message = new Data(msg,ts,cat,type,subtype,loc);
+                    Data message = new Data(msg, ts, cat, type, subtype, loc);
                     messages.add(message);
                     cursor.moveToNext();
                     numEntries--;

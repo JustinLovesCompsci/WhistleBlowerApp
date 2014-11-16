@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
@@ -109,7 +110,7 @@ public class PostActivity extends Activity {
                 }
                 myData.setCategory(category.toString());
                 myData.setMessage(((EditText) findViewById(R.id.message_box)).getText().toString());
-//                myData.setLocation("1.0:1.0");//TODO: dummy content
+                myData.setLocation("1.0:1.0");//TODO: dummy content
                 //TODO: check
 
                 Location location = getLocation();
@@ -122,6 +123,12 @@ public class PostActivity extends Activity {
                 double longitude = location.getLongitude();
                 double latitude = location.getLatitude();
                 myData.setLocation(longitude + Util.SEPARATOR + latitude);
+
+//                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//                double longitude = location.getLongitude();
+//                double latitude = location.getLatitude();
+//                myData.setLocation(longitude + Util.SEPARATOR + latitude);
 
                 if (!validate()) {
                     showNonFilledDialog();
