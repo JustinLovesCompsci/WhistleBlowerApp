@@ -3,6 +3,58 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="style.css" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="https://cdn.firebase.com/js/client/2.0.3/firebase.js"></script>
+<script>
+    window.sexism = 0;
+    window.racism = 0;
+
+    $(document).ready(function() {
+        var ref = new Firebase('https://scorching-fire-8150.firebaseio.com/wb/events');
+            ref.on("child_added", function(snapshot) {
+               snapshot.forEach(function(ss) {
+                   console.log(ss.val());
+                    if (ss.val() == 'Racism') {
+                        racism++;
+                    } else if (ss.val() == 'Sexism') { 
+                        sexism++;
+                    }
+               });
+           }, function (errorObject) {
+               console.log("The read failed: " + errorObject.code);
+           });
+
+setInterval(pie, 8000);
+
+function pie() {
+        $('#pie').highcharts({
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: 'Types of discriminations'
+            },
+            xAxis: {
+                categories: ['Racism', 'Sexism']
+            },
+
+            series: [{
+                data: [{
+                    name: 'Racism',
+                    color: '#050000',
+                    y: racism
+                }, {
+                    name: 'Sexism',
+                    color: '#F11212',
+                    y: sexism
+                }]
+            }]
+        });
+}
+});
+
+</script>
 <title>WhistleBlower</title>
 </head>
 
@@ -13,45 +65,36 @@
             <h2>Report harassment anonymously, anytime, anywhere...</h2>
         </div>   
         
-
-        
-        
-        
-        
 		<div id="content">
-        
-        
         <div id="content_top"></div>
         <div id="content_main">
         	<h2>This application is for your safety </h2>
         	<p>&nbsp;</p>
            	<p>&nbsp;</p>
        	  <h3>What is WhistleBlower</h3>
-        	<p>It's an Android app that helps you report any sexual assault on campuses anytime anywhere without revealing your identity. WhistleBlower shows you when & where these incidents happened through an interactive google map </p>
+        	<p>An Android app that helps you report any sexual or racial harassment, anytime and anywhere without revealing your identity. WhistleBlower help gathering data about those incident, monitor them in real time, and make them available through an interactive map or comprehensive charts</p>
         	<p>&nbsp;</p>
 <h3>More information</h3>
-        	<p>WistleBlower provides you with data analysis and statistics on the incidents that happend overtime. You get to know information like which race or gender group has been harassed the most through the years a range of years</p>
+        	<p>WistleBlower provides you with data analysis and statistics on the incidents that happend overtime. You get to know information like which race or gender group has been harassed, and at which frequency, throughout the time</p>
             <p>&nbsp;</p>
 </div>
-<div >
+<div>
 <table style="width:100%" align="center">
   <tr>
-     <td><img src="images/html1.png" alt="The official HTML5 Icon" style="width:512;height:256px"></td> 
-     <td><img src="images/html2.png" alt="The official HTML5 Icon" style="width:512;height:256px"></td> 
+     <td></td>
+     <td id="pie" style="display:block"></td> 
   </tr>
   <tr></tr>
   <tr></tr>
   <tr></tr>
   <tr></tr>
   <tr>
-     <td><img src="images/html3.png" alt="The official HTML5 Icon" style="width:512;height:256px"></td> 
-     <td><img src="images/html4.png" alt="The official HTML5 Icon" style="width:512;height:256px"></td>
+     <td></td> 
+     <td></td>
   </tr>
   <tr></tr>
   <tr></tr>
 </table>         
-        
-        
 
    </div>
    </div>
