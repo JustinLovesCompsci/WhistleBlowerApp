@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.main.whistleblower.models.ListAdapter;
 import com.google.android.gms.maps.GoogleMap;
@@ -58,7 +59,12 @@ public class MainActivity extends FragmentActivity {
 
         // Starting map services
         setContentView(R.layout.activity_main);
-        googleMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+        SupportMapFragment myFrag = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
+        try {
+            googleMap = myFrag.getMap();
+        } catch (Exception ex) {
+            Toast.makeText(this, "error rendering map", Toast.LENGTH_LONG).show();
+        }
 
         // Starting array adapter for message display
         dataList = new ArrayList<Data>();
