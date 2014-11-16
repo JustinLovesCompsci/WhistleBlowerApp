@@ -11,9 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.ContactsContract;
 
-import com.example.main.whistleblower.MainActivity;
 
 
 /**
