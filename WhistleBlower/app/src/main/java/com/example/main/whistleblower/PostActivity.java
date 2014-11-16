@@ -113,8 +113,8 @@ public class PostActivity extends Activity {
     private class SubmissionTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
-            person = new Person();
-            person.setName(etName.getText().toString());
+            person = new Data();
+            person.setName(Data.getText().toString());
             person.setCountry(etCountry.getText().toString());
             person.setTwitter(etTwitter.getText().toString());
             return post(urls[0], person);
