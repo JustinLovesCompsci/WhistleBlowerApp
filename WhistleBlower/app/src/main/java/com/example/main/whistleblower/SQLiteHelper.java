@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,10 +85,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
      * instance without additional setup. Database updates automatically.
      *
      * @param msgContent message body
-     * @param msgID message id
      * @param msgTS message timestamp
      */
-    public synchronized void insertEntry(String msgContent, String msgID, String msgTS, String cat,
+    public synchronized void insertEntry(String msgContent, String msgTS, String cat,
                                          String type, String subtype, String loc) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
