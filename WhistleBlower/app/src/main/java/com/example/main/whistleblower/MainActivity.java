@@ -53,7 +53,7 @@ public class MainActivity extends FragmentActivity {
 
     private ListView mListView;
 
-    private BroadcastReceiver mLocationReceiver = new BroadcastReceiver(){
+    private BroadcastReceiver mLocationReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             SQLiteHelper.getInstance().getRecentMessages();

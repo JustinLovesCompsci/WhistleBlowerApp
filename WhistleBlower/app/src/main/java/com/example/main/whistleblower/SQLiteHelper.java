@@ -93,7 +93,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(SQLiteHelper.COLUMN_CONTENT, msgContent);
-        values.put(SQLiteHelper.COLUMN_TS, msgTS);
+        values.put(SQLiteHelper.COLUMN_TS, Util.convertDataTimeToUserTime(msgTS));
         values.put(SQLiteHelper.COLUMN_CAT, cat);
         values.put(SQLiteHelper.COLUMN_TYPE, type);
         values.put(SQLiteHelper.COLUMN_SUBTYPE, subtype);
