@@ -3,6 +3,7 @@ Name: WhistleBlower
 Tagline: Report Any Discrimination Anonymously, Anytime, Anywhere...
 
 Description
+
 Lots of people have been sexually harassed on college campuses, but stayed silent about it. There has been very little done to prevent that, but not anymore with WhistleBlower!
 
 WhistleBlower is an Android app that lets you report any discrimination or sexual harassment incidents on college campus anonymously. Just enter when, where and what happened using our friendly user interface anonymously. WhistleBlower will store these reports in a Firebase that is synchronized in real time with our website to provide live feeds and statistics on the reports within specific time, place or group. WhistleBlower also lets you know on which sites these incidents happened through an interactive google map and lists the time and dates of these incidents.
