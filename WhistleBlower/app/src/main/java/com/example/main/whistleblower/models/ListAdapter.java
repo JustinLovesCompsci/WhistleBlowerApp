@@ -18,7 +18,7 @@ public class ListAdapter extends ArrayAdapter<Data> {
 
     public ListAdapter(Context context, List<Data> objects) {
 
-        super(context, R.layout.item_layout, R.id.secondLine, objects);
+        super(context, R.layout.item_layout, objects);
 
     }
 
@@ -29,11 +29,10 @@ public class ListAdapter extends ArrayAdapter<Data> {
         convertView = LayoutInflater.from(getContext())
                 .inflate(R.layout.item_layout, parent, false);
 
-        TextView header = (TextView) convertView.findViewById(R.id.firstLine);
-        TextView content = (TextView) convertView.findViewById(R.id.secondLine);
-
-        header.setText("Time: " + msg.getTimeStamp() + "--" + " Action: " + msg.getCategory());
-        content.setText(msg.getMessage());
+        ((TextView) convertView.findViewById(R.id.timestampBox)).setText(msg.getTimeStamp());
+        ((TextView) convertView.findViewById(R.id.typeBox)).setText(msg.getType());
+        ((TextView) convertView.findViewById(R.id.categoryBox)).setText(msg.getCategory());
+        ((TextView) convertView.findViewById(R.id.message_box)).setText(msg.getMessage());
 
         return convertView;
     }
