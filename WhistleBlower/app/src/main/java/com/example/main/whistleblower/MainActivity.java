@@ -74,9 +74,6 @@ public class MainActivity extends FragmentActivity {
 
         // For static access to this activity by thread handler
         myActivity = this;
-
-//        getFragmentManager().beginTransaction()
-//                .add(R.id.container, new MapFragment()).commit();
         initFetchDataTask();
 
         // Getting cached messages
@@ -186,7 +183,6 @@ public class MainActivity extends FragmentActivity {
                 in.close();
 
                 Log.w("FetchDataTask", response.toString());
-
                 if (!response.toString().equals("null")) {
                     JsonElement jsonElement = new JsonParser().parse(response.toString());
                     JsonObject jsonObject = jsonElement.getAsJsonObject();

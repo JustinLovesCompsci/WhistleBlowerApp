@@ -123,6 +123,8 @@ public class PostActivity extends Activity {
             return false;
         } else if (myData.getLocation() == null || myData.getLocation().trim().equals("")) {
             return false;
+        } else if (myData.getMessage() == null || myData.getMessage().trim().equals("")) {
+            return false;
         }
         return true;
     }
