@@ -10,31 +10,22 @@
     tools:context=".MainActivity"
     android:weightSum="1">
 
-    <LinearLayout
-        android:id="@+id/container"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <fragment
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.MapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"/>
-
-
-    </LinearLayout>
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
 
     <ListView
         android:id="@+id/msg_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginBottom="2dip"
         android:drawSelectorOnTop="true"
         android:paddingBottom="8dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:paddingTop="8dp">
-    </ListView>
+        android:paddingTop="8dp"></ListView>
 
 </LinearLayout>

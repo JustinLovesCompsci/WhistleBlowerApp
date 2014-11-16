@@ -25,7 +25,7 @@ public class Data implements Comparable<Data> {
     public Data(String msg, String timestamp, String mCategory,
                 String mType, String mSub_Type, String mLocation) {
         Message = msg;
-        TimeStamp = convertTime(Long.parseLong(timestamp));
+        TimeStamp = timestamp;
         Category = mCategory;
         Type = mType;
         Sub_Type = mSub_Type;

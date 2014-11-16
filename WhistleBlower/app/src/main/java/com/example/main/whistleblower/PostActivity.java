@@ -2,10 +2,7 @@ package com.example.main.whistleblower;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
@@ -73,13 +70,13 @@ public class PostActivity extends Activity {
                 }
                 myData.setCategory(category.toString());
                 myData.setMessage(((EditText) findViewById(R.id.message_box)).getText().toString());
-//                myData.setLocation("1.0:1.0");//TODO: dummy content
+                myData.setLocation("1.0:1.0");//TODO: dummy content
                 //TODO: check
-                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                double longitude = location.getLongitude();
-                double latitude = location.getLatitude();
-                myData.setLocation(longitude + Util.SEPARATOR + latitude);
+//                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//                double longitude = location.getLongitude();
+//                double latitude = location.getLatitude();
+//                myData.setLocation(longitude + Util.SEPARATOR + latitude);
 
                 if (!validate()) {
                     showNonFilledDialog();

@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.example.main.whistleblower.util.SystemUiHider;
 
@@ -120,9 +121,10 @@ public class AnalysisActivity extends Activity {
 //        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
         WebView myWebView = (WebView) findViewById(R.id.analysis_view);
+        myWebView.setWebViewClient(new WebViewClient());
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        myWebView.loadUrl("http://www.google.com");//TODO: change url
+        myWebView.loadUrl(Constants.ANALYSIS_URL);
     }
 
     @Override

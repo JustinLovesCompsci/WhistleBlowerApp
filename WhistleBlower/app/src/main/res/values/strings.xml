@@ -25,15 +25,19 @@
     </string-array>
     <string-array name="racism_subType_array">
         <item>Caucasian</item>
-        <item>Black</item>
+        <item>African</item>
         <item>Asian</item>
         <item>Latino</item>
-        <item>Indian American</item>
+        <item>Native American</item>
+        <item>Dornish</item>
+        <item>Wookiee</item>
     </string-array>
     <string-array name="sexism_subType_array">
         <item>Male</item>
         <item>Female</item>
         <item>Transgender</item>
+        <item>Androgyne</item>
+        <item>Other</item>
     </string-array>
 
     <string name="title_activity_analysis">AnalysisActivity</string>

@@ -63,7 +63,7 @@ public class MainActivity extends FragmentActivity {
         try {
             googleMap = myFrag.getMap();
         } catch (Exception ex) {
-            Toast.makeText(this, "error rendering map", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Unable to load map", Toast.LENGTH_SHORT).show();
         }
 
         // Starting array adapter for message display
@@ -202,6 +202,7 @@ public class MainActivity extends FragmentActivity {
                         SQLiteHelper.getInstance().insertEntry(message, timestamp, category, type, sub_type, location);
                     }
                 }
+                SQLiteHelper.getInstance().getRecentMessages();
             } catch (IOException e) {
                 e.printStackTrace();
             }
