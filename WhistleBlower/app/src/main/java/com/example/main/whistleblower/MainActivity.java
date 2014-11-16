@@ -66,7 +66,7 @@ public class MainActivity extends FragmentActivity {
 
         // Starting map services
         setContentView(R.layout.activity_main);
-        googleMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+        googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 
         // Starting array adapter for message display
         dataList = new ArrayList<Data>();
