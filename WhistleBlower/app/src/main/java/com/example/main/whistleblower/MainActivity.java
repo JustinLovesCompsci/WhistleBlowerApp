@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -11,11 +12,16 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
+import com.example.main.whistleblower.models.ListAdapter;
+import com.google.android.gms.maps.CameraUpdateFactory;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -39,6 +45,23 @@ public class MainActivity extends FragmentActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             SQLiteHelper.getInstance().getRecentMessages();
+            Bundle extras = intent.getExtras();
+            Location l = (Location) extras.get("NEW_LOCATION");
+            Log.d("Daniel","requesting updates from sql database");
+            if(googleMap==null)
+                return;
+            try {
+                googleMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+                googleMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(l.getLatitude(), l.getLongitude()))
+                        .title("Event")).setVisible(true);
+                Log.d("Daniel", "Supposedly added a pin to the map?");
+                populateMap();
+                googleMap.animateCamera(CameraUpdateFactory.newLatLng(
+                        new LatLng(l.getLatitude(), l.getLongitude())));
+            } catch(NullPointerException ex){
+                return;
+            }
         }
     };
 
@@ -49,6 +72,9 @@ public class MainActivity extends FragmentActivity {
         // Getting location manager
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
+        // Dynamically registering intent receiver
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLocationReceiver, new IntentFilter("LOCATION_UPDATE"));
+
         // Starting map services
         setContentView(R.layout.activity_main);
         SupportMapFragment myFrag = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
@@ -58,8 +84,15 @@ public class MainActivity extends FragmentActivity {
             Toast.makeText(this, "Unable to load map", Toast.LENGTH_SHORT).show();
         }
 
+        dataList = new ArrayList<Data>();
+
+
+        // Filling the map with the data
+        populateMap();
+
         // For static access to this activity by thread handler
         myActivity = this;
+
         initFetchDataTask();
         dataList = new ArrayList<Data>();
         BackendService.startActionFetch(this);
@@ -101,6 +134,7 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onResume() {
 //        initFetchDataTask();
+        populateMap();
         super.onResume();
     }
 
@@ -161,6 +195,7 @@ public class MainActivity extends FragmentActivity {
             googleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(Util.convertToLatitude(location),
                             Util.convertToLongtitude(location))));
+            Log.d("Daniel","added point to the map");
         }
     }
 }

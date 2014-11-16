@@ -95,6 +95,7 @@ public class PostActivity extends Activity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("Daniel","sendButton");
                 StringBuilder category = new StringBuilder();
                 boolean physicalChecked = ((CheckBox) findViewById(R.id.checkBox_category_physical)).isChecked();
                 boolean verbalChecked = ((CheckBox) findViewById(R.id.checkBox_category_verbal)).isChecked();
@@ -109,8 +110,6 @@ public class PostActivity extends Activity {
                 }
                 myData.setCategory(category.toString());
                 myData.setMessage(((EditText) findViewById(R.id.message_box)).getText().toString());
-                myData.setLocation("1.0:1.0");//TODO: dummy content
-                //TODO: check
 
                 Location location = getLocation();
 
@@ -119,20 +118,17 @@ public class PostActivity extends Activity {
                     return;
                 }
 
-                double longitude = location.getLongitude();
-                double latitude = location.getLatitude();
-                myData.setLocation(longitude + Util.SEPARATOR + latitude);
-
-//                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//                double longitude = location.getLongitude();
-//                double latitude = location.getLatitude();
-//                myData.setLocation(longitude + Util.SEPARATOR + latitude);
+                myData.setLocation(Util.appendCoordinates(location.getLongitude(),location.getLongitude()));
 
                 if (!validate()) {
                     showNonFilledDialog();
+                    myData.clear();
+                    return;
                 }
+                Toast.makeText(getApplicationContext(),"Report posted",Toast.LENGTH_SHORT).show();
                 new SubmissionTask().execute(Constants.DATABASE_URL);
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);
             }
         });
     }
@@ -311,12 +307,6 @@ public class PostActivity extends Activity {
                 e.printStackTrace();
             }
             return post(urls[0], json);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            Log.w("PostActivity", "Message Sent");
-            finish();
         }
     }
 }
