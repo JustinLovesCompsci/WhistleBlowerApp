@@ -1,31 +1,71 @@
 package com.example.main.whistleblower;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.widget.ListView;
 
+import com.example.main.whistleblower.models.ListAdapter;
+import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.model.*;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 
-public class MainActivity extends Activity implements View.OnClickListener {
+public class MainActivity extends FragmentActivity {
 
     private static MainActivity myActivity;
-    private static List<Data> dataList;
+
+
+    private List<Data> dataList;
+    private ListAdapter mAdapter;
+
+    LocationManager mLocationManager;
+    GoogleMap googleMap;
+
+    private ListView mListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Getting location manager
+        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        // Starting map services
         setContentView(R.layout.activity_main);
+        googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+
+        // Starting array adapter for message display
+        dataList = new ArrayList<Data>();
+        mAdapter = new ListAdapter(this, dataList);
+        mListView = (ListView) findViewById(R.id.msg_list);
+        mListView.setAdapter(mAdapter);
+
+        // For static access to this activity by thread handler
         myActivity = this;
-//        getFragmentManager().beginTransaction()
-//                .add(R.id.container, new MapFragment()).commit();
+    }
+
+    private void placePointsOnMap(List<Location> listOfLocations){
+        // A reference of a GoogleMap object exists as instance variable
+        for(Location l : listOfLocations){
+            String myTitle = "";                // Empty string for title
+            googleMap.addMarker(new MarkerOptions()
+                     .position(new LatLng(l.getLatitude(), l.getLongitude()))
+                     .title(myTitle));
+        }
     }
 
 
@@ -47,10 +87,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onClick(View view) {
-
-    }
 
     public static Activity getMyActivity(){
         return myActivity;
@@ -60,16 +96,18 @@ public class MainActivity extends Activity implements View.OnClickListener {
      * Handler used for updating the ListView
      * @return
      */
-    public android.os.Handler getHandler(){
+    public Handler getHandler(){
         return new Handler(Looper.getMainLooper()) {
             public void handleMessage(Message m) {
                 Data d = (Data) m.obj;
-                if (dataList.size() >= 20) {
-                    dataList.remove(19);
+
+                // Eliminating the oldest element in the list if full
+                if (dataList.size() >= 30) {
+                    dataList.remove(29);
                 }
                 dataList.add(d);
                 Collections.sort(dataList);
-//                listAdapter.notifyDataSetChanged();
+                mAdapter.notifyDataSetChanged();
             }
         };
     }

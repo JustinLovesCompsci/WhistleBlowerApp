@@ -5,6 +5,8 @@ package com.example.main.whistleblower;
  */
 public class Util {
 
+    public static final String SEPARATOR = ":";
+
     public static double convertToLatitude(String location) {
         String[] coordinates = location.split(":");
         double latitude = Double.valueOf(coordinates[1]);
