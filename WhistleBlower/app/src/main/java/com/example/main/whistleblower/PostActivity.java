@@ -49,12 +49,34 @@ public class PostActivity extends Activity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                constructData();
                 if (!validate()) {
                     showNonFilledDialog();
                 }
                 new SubmissionTask().execute("");//TODO:url
             }
         });
+    }
+
+    private void constructData() {
+        StringBuilder category = new StringBuilder();
+        boolean physicalChecked = ((CheckBox) findViewById(R.id.checkBox_category_physical)).isChecked();
+        boolean verbalChecked = ((CheckBox) findViewById(R.id.checkBox_category_verbal)).isChecked();
+        if (physicalChecked && verbalChecked) {
+            category.append(Constants.PHYSICAL);
+            category.append(Util.SEPARATOR);
+            category.append(Constants.VERBAL);
+        } else if (physicalChecked) {
+            category.append(Constants.PHYSICAL);
+        } else if (verbalChecked) {
+            category.append(Constants.VERBAL);
+        }
+        myData.setCategory(category.toString());
+        myData.setMessage(((EditText) findViewById(R.id.message_box)).getText().toString());
+//            data.setLocation();//TODO: set location
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm a");
+        myData.setTimeStamp(dateFormat.format(c.getTime()));
     }
 
     private void showNonFilledDialog() {
@@ -71,15 +93,15 @@ public class PostActivity extends Activity {
     }
 
     private boolean validate() {
-        if (myData.getType().trim().equals("")) {
+        if (myData.getType() == null || myData.getType().trim().equals("")) {
             return false;
-        } else if (myData.getSub_Type().trim().equals("")) {
+        } else if (myData.getSub_Type() == null || myData.getSub_Type().trim().equals("")) {
             return false;
-        } else if (myData.getTimeStamp().trim().equals("")) {
+        } else if (myData.getTimeStamp() == null || myData.getTimeStamp().trim().equals("")) {
             return false;
-        } else if (myData.getCategory().trim().equals("")) {
+        } else if (myData.getCategory() == null || myData.getCategory().trim().equals("")) {
             return false;
-        } else if (myData.getLocation().trim().equals("")) {
+        } else if (myData.getLocation() == null || myData.getLocation().trim().equals("")) {
             return false;
         }
         return true;
@@ -162,34 +184,13 @@ public class PostActivity extends Activity {
     private class SubmissionTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
-            Data data = new Data();
-
-            StringBuilder category = new StringBuilder();
-            boolean physicalChecked = ((CheckBox) findViewById(R.id.checkBox_category_physical)).isChecked();
-            boolean verbalChecked = ((CheckBox) findViewById(R.id.checkBox_category_verbal)).isChecked();
-            if (physicalChecked && verbalChecked) {
-                category.append(Constants.PHYSICAL);
-                category.append(Util.SEPARATOR);
-                category.append(Constants.VERBAL);
-            } else if (physicalChecked) {
-                category.append(Constants.PHYSICAL);
-            } else if (verbalChecked) {
-                category.append(Constants.VERBAL);
-            }
-            data.setCategory(category.toString());
-            data.setMessage(((EditText) findViewById(R.id.message_box)).getText().toString());
-//            data.setLocation();//TODO: set location
-            Calendar c = Calendar.getInstance();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm a");
-            data.setTimeStamp(dateFormat.format(c.getTime()));
-
             JSONObject json = new JSONObject();
             try {
-                json.accumulate(Constants.TYPE, data.getType());
-                json.accumulate(Constants.SUB_TYPE, data.getSub_Type());
-                json.accumulate(Constants.MESSAGE, data.getMessage());
-                json.accumulate(Constants.CATEGORY, data.getCategory());
-                json.accumulate(Constants.LOCATION, data.getLocation());
+                json.accumulate(Constants.TYPE, myData.getType());
+                json.accumulate(Constants.SUB_TYPE, myData.getSub_Type());
+                json.accumulate(Constants.MESSAGE, myData.getMessage());
+                json.accumulate(Constants.CATEGORY, myData.getCategory());
+                json.accumulate(Constants.LOCATION, myData.getLocation());
             } catch (Exception e) {
                 e.printStackTrace();
             }
