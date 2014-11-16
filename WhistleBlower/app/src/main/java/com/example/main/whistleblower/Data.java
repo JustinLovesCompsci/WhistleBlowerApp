@@ -101,7 +101,7 @@ public class Data implements Comparable<Data> {
         Sub_Type = sub_Type;
     }
 
-    public void clear(){
+    public void clear() {
         Message = null;
         TimeStamp = null;
         Category = null;
