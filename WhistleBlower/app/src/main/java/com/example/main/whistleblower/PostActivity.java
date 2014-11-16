@@ -123,10 +123,6 @@ public class PostActivity extends Activity {
 
                 if (!validate()) {
                     showNonFilledDialog();
-<<<<<<< HEAD
-//                    myData.clear();
-=======
->>>>>>> 2d1d17e98dbe9e44f9ab71f5b7c52caa9e2fe1a2
                     return;
                 }
                 Toast.makeText(getApplicationContext(), "Report posted", Toast.LENGTH_SHORT).show();
