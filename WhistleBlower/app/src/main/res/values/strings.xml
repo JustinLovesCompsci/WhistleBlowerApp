@@ -5,7 +5,6 @@
     <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_post">PostActivity</string>
-
     <string name="prompt_select_type">Choose a Type</string>
     <string name="prompt_select_sub_type">Choose a Sub Type</string>
     <string name="message_box_hint">Describe Your Situation</string>
@@ -18,7 +17,6 @@
         <item>Racism</item>
         <item>Sexism</item>
     </string-array>
-
     <string-array name="racism_subType_array">
         <item>Caucasian</item>
         <item>Black</item>
@@ -26,11 +24,15 @@
         <item>Latino</item>
         <item>Indian American</item>
     </string-array>
-
     <string-array name="sexism_subType_array">
         <item>Male</item>
         <item>Female</item>
         <item>Transgender</item>
     </string-array>
+
+    <string name="title_activity_analysis">AnalysisActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>

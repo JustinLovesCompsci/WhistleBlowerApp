@@ -43,6 +43,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.post_message:
                 startActivity(new Intent(MainActivity.this, PostActivity.class));
                 return true;
+            case R.id.item_data_analysis:
+                startActivity(new Intent(MainActivity.this, AnalysisActivity.class));
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -52,15 +55,16 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     }
 
-    public static Activity getMyActivity(){
+    public static Activity getMyActivity() {
         return myActivity;
     }
 
     /**
      * Handler used for updating the ListView
+     *
      * @return
      */
-    public android.os.Handler getHandler(){
+    public android.os.Handler getHandler() {
         return new Handler(Looper.getMainLooper()) {
             public void handleMessage(Message m) {
                 Data d = (Data) m.obj;
