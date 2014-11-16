@@ -44,7 +44,7 @@ public class MainActivity extends FragmentActivity {
     private BroadcastReceiver mLocationReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            SQLiteHelper.getInstance().getRecentMessages();
+            
             Bundle extras = intent.getExtras();
             Location l = (Location) extras.get("NEW_LOCATION");
             Log.d("Daniel","requesting updates from sql database");
