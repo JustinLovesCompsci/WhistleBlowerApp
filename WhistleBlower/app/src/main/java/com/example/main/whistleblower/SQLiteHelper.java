@@ -141,6 +141,16 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                     Message m = Message.obtain(handler, 0, d);
                     m.sendToTarget();
                 }
+
+                // Sending each message to the main thread
+                for (Data d : messages) {
+                    FeedsActivity main = (FeedsActivity) FeedsActivity.getMyActivity();
+                    if (main != null) {
+                        Handler handler = main.getHandler();
+                        Message m = Message.obtain(handler, 0, d);
+                        m.sendToTarget();
+                    }
+                }
                 return null;
             }
         }.execute(null, null, null);
