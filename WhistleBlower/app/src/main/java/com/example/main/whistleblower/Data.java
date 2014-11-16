@@ -35,7 +35,7 @@ public class Data implements Comparable<Data> {
 
     private String convertTime(long time) {
         Date date = new Date(time);
-        Format format = new SimpleDateFormat("yyyy MM dd HH:mm:ss");
+        Format format = new SimpleDateFormat(Util.TIME_FORMAT);
         return format.format(date);
     }
 

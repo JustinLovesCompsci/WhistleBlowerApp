@@ -20,8 +20,28 @@ import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 
 import java.util.ArrayList;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 
 public class MainActivity extends FragmentActivity {
@@ -46,7 +66,7 @@ public class MainActivity extends FragmentActivity {
 
         // Starting map services
         setContentView(R.layout.activity_main);
-        googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+        googleMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
 
         // Starting array adapter for message display
         dataList = new ArrayList<Data>();
@@ -57,15 +77,29 @@ public class MainActivity extends FragmentActivity {
         // For static access to this activity by thread handler
         myActivity = this;
 
+//        getFragmentManager().beginTransaction()
+//                .add(R.id.container, new MapFragment()).commit();
+        initFetchDataTask();
+
         // Getting cached messages
         SQLiteHelper.getInstance().getRecentMessages();
-
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+//        initFetchDataTask();
+        super.onResume();
+    }
+
+    private void initFetchDataTask() {
+        new FetchDataTask().execute(Constants.DATABASE_URL);
     }
 
     @Override
@@ -118,15 +152,57 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    private void populateMap(){
-        if(dataList.isEmpty() || googleMap==null)
+    private void populateMap() {
+        if (dataList.isEmpty() || googleMap == null)
             return;
         String location = null;
-        for(Data d : dataList){
+        for (Data d : dataList) {
             location = d.getLocation();
             googleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(Util.convertToLatitude(location),
-                                         Util.convertToLongtitude(location))));
+                            Util.convertToLongtitude(location))));
+        }
+    }
+
+    public class FetchDataTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                URL obj = new URL(urls[0]);
+                HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+                conn.setRequestMethod("GET");
+                int responseCode = conn.getResponseCode();
+                if (responseCode != 200) {
+                    Log.w("MainActivity", "Unable to fetch data");
+                    return null;
+                }
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(
+                        conn.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+                Log.w("MainActivity", response.toString());
+
+                JsonElement jsonElement = new JsonParser().parse(response.toString());
+                JsonObject jsonObject = jsonElement.getAsJsonObject();
+                for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
+                    String type = entry.getValue().getAsJsonObject().get(Constants.TYPE).toString().replace("\"", "");
+                    String sub_type = entry.getValue().getAsJsonObject().get(Constants.SUB_TYPE).toString().replace("\"", "");
+                    String message = entry.getValue().getAsJsonObject().get(Constants.MESSAGE).toString().replace("\"", "");
+                    String category = entry.getValue().getAsJsonObject().get(Constants.CATEGORY).toString().replace("\"", "");
+                    String timestamp = entry.getValue().getAsJsonObject().get(Constants.TIME_STAMP).toString().replace("\"", "");
+                    String location = entry.getValue().getAsJsonObject().get(Constants.LOCATION).toString().replace("\"", "");
+                    SQLiteHelper.getInstance().insertEntry(message, timestamp, category, type, sub_type, location);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return "Success";
         }
     }
 

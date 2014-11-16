@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 package com.example.main.whistleblower;
 
 import android.app.Fragment;
@@ -163,4 +162,4 @@ public class MapFragment extends Fragment {
 //    }
 
 }
->>>>>>> 2c1970f043709830647b242b515290d3afbd2a0d
+

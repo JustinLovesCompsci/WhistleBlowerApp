@@ -32,10 +32,10 @@
             android:paddingBottom="1dp" />
 
         <TextView
+            android:id="@+id/typeBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/type"
-            android:id="@+id/typeBox"
             android:textSize="12dp"
             android:paddingLeft="5dp"
             android:paddingTop="5dp"
@@ -43,10 +43,10 @@
             android:paddingBottom="1dp" />
 
         <TextView
+            android:id="@+id/categoryBox"
             android:layout_width="117dp"
             android:layout_height="wrap_content"
             android:text="@string/category"
-            android:id="@+id/categoryBox"
             android:textSize="12dp"
             android:gravity="right"
             android:layout_gravity="right"

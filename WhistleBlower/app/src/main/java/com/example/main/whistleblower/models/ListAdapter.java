@@ -18,7 +18,7 @@ public class ListAdapter extends ArrayAdapter<Data> {
 
     public ListAdapter(Context context, List<Data> objects) {
 
-        super(context, R.layout.item_layout, R.id.thirdLine, objects);
+        super(context, R.layout.item_layout, R.id.secondLine, objects);
 
     }
 

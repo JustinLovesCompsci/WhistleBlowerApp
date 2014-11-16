@@ -13,4 +13,7 @@ public class Constants {
     public static final String MESSAGE = "Message";
     public static final String CATEGORY = "Category";
     public static final String LOCATION = "Location";
+    public static final String TIME_STAMP = "Time_Stamp";
+
+    public static final String DATABASE_URL = "";
 }

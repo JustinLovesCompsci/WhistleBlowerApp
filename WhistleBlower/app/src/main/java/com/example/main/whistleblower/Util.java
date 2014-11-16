@@ -6,6 +6,7 @@ package com.example.main.whistleblower;
 public class Util {
 
     public static final String SEPARATOR = ":";
+    public static final String TIME_FORMAT = "yyyy MM dd HH:mm:ss";
 
     public static double convertToLatitude(String location) {
         String[] coordinates = location.split(SEPARATOR);
