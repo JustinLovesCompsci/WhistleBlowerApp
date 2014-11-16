@@ -28,6 +28,7 @@ public class FeedsActivity extends Activity {
         dataList = new ArrayList<Data>();
         myActivity = this;
         setContentView(R.layout.activity_feeds);
+        BackendService.startActionFetch(this);
         mAdapter = new ListAdapter(this, dataList);
         mListView = (ListView) findViewById(R.id.msg_list);
         mListView.setAdapter(mAdapter);
@@ -61,6 +62,7 @@ public class FeedsActivity extends Activity {
         return new Handler(Looper.getMainLooper()) {
             public void handleMessage(Message m) {
                 Data d = (Data) m.obj;
+                d.setTimeStamp(Util.convertDataTimeToUserTime(d.getTimeStamp()));
                 if (dataList.size() >= 30) {
                     dataList.remove(29);
                 }
