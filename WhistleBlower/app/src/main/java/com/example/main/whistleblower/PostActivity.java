@@ -2,7 +2,10 @@ package com.example.main.whistleblower;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
@@ -70,14 +73,13 @@ public class PostActivity extends Activity {
                 }
                 myData.setCategory(category.toString());
                 myData.setMessage(((EditText) findViewById(R.id.message_box)).getText().toString());
-                myData.setLocation("1.0:1.0");//TODO: set location
-
+//                myData.setLocation("1.0:1.0");//TODO: dummy content
                 //TODO: check
-//                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//                double longitude = location.getLongitude();
-//                double latitude = location.getLatitude();
-//                myData.setLocation(longitude + Util.SEPARATOR + latitude);
+                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                double longitude = location.getLongitude();
+                double latitude = location.getLatitude();
+                myData.setLocation(longitude + Util.SEPARATOR + latitude);
 
                 if (!validate()) {
                     showNonFilledDialog();
@@ -90,7 +92,8 @@ public class PostActivity extends Activity {
     private void constructData() {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat(Util.TIME_FORMAT);
-        myData.setTimeStamp(dateFormat.format(c.getTime()));
+        String dateTime = dateFormat.format(c.getTime());
+        myData.setTimeStamp(dateTime);
     }
 
     private void showNonFilledDialog() {
@@ -215,7 +218,6 @@ public class PostActivity extends Activity {
             if (responseCode != 200) {
                 Log.w("PostActivity", conn.toString());
                 Log.w("PostActivity", "Some Error Happened Getting the Data! " + responseCode);
-//                System.exit(0);
             }
             conn.disconnect();
         } catch (IOException e) {
@@ -235,6 +237,7 @@ public class PostActivity extends Activity {
                 json.accumulate(Constants.MESSAGE, myData.getMessage());
                 json.accumulate(Constants.CATEGORY, myData.getCategory());
                 json.accumulate(Constants.LOCATION, myData.getLocation());
+                json.accumulate(Constants.TIME_STAMP, myData.getTimeStamp());
             } catch (Exception e) {
                 e.printStackTrace();
             }
