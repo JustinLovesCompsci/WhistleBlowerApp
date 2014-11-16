@@ -71,7 +71,7 @@ public class MainActivity extends FragmentActivity {
         try {
             googleMap = myFrag.getMap();
         } catch(Exception ex){
-            Toast.makeText(this,"error rendering map",).;
+            Toast.makeText(this,"error rendering map",Toast.LENGTH_SHORT).show();
         }
 
         // Starting array adapter for message display
