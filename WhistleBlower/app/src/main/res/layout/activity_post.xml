@@ -9,6 +9,16 @@
     android:orientation="vertical"
     tools:context="com.example.main.whistleblower.PostActivity">
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/app_blue"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:text="You are not alone. You will be believed." />
+
     <Spinner
         android:id="@+id/harassment_type_dropDown"
         android:layout_width="fill_parent"
