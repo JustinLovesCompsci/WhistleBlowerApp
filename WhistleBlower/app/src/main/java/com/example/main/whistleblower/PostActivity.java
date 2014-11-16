@@ -71,7 +71,7 @@ public class PostActivity extends Activity {
         LocationListener mLocationListener = new LocationUpdater();
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mLocationReceiver, new IntentFilter("LOCATION_UPDATE"));
-        final LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (locationManager == null) {
             Toast.makeText(getApplicationContext(), "location manager is null!", Toast.LENGTH_LONG).show();
             return;
@@ -111,7 +111,8 @@ public class PostActivity extends Activity {
                 myData.setCategory(category.toString());
                 myData.setMessage(((EditText) findViewById(R.id.message_box)).getText().toString());
 
-                Location location = getLocation();
+                LocationManager  ml = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                Location location = getLocation(ml);
 
                 if (location == null) {
                     Toast.makeText(getApplicationContext(), "location is null!", Toast.LENGTH_LONG).show();
@@ -133,11 +134,11 @@ public class PostActivity extends Activity {
         });
     }
 
-    public Location getLocation() {
+    public Location getLocation(LocationManager manager) {
         if (mCurrentLocation != null)
             return mCurrentLocation;
 
-        List<String> providers = locationManager.getProviders(true);
+        List<String> providers = manager.getProviders(true);
         Location bestLocation = null;
         for (String provider : providers) {
             Location l = locationManager.getLastKnownLocation(provider);
