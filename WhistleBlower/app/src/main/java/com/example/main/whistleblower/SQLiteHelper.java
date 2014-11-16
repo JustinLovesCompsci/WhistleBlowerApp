@@ -115,9 +115,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                     long ts = cursor.getLong(0);
                     String id = cursor.getString(1);
                     String content = cursor.getString(2);
-                    Data message = new Data(
-                            "edu.duke.gossip.BROADCAST", id, ts
-                            + "", content);
+                    Data message = new Data();
                     messages.add(message);
                     cursor.moveToNext();
                     numEntries--;
