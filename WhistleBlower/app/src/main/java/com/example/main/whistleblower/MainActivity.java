@@ -67,7 +67,7 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SQLiteHelper.getInstance().getRecentMessages();
+
         // Getting location manager
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -116,7 +116,7 @@ public class MainActivity extends FragmentActivity {
             }
         });
         // Getting cached messages
-
+        SQLiteHelper.getInstance().getRecentMessages();
 
         // Filling the map with the data
         populateMap();
