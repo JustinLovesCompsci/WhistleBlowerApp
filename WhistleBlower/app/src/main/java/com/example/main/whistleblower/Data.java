@@ -23,7 +23,7 @@ public class Data implements Comparable<Data> {
 
     }
 
-    public Data(String msg,   String timestamp, String mCategory,
+    public Data(String msg, String timestamp, String mCategory,
                 String mType, String mSub_Type, String mLocation) {
         Message = msg;
         TimeStamp = convertTime(Long.parseLong(timestamp));
@@ -42,7 +42,16 @@ public class Data implements Comparable<Data> {
     // Order by timestamp
     @Override
     public int compareTo(Data d) {
-        return -(this.TimeStamp.compareTo(d.TimeStamp));
+        if (!this.TimeStamp.equals(d.TimeStamp)) {
+            return -(this.TimeStamp.compareTo(d.TimeStamp));
+        } else if (!this.Type.equals(d.Type)) {
+            return this.Type.compareTo(d.Type);
+        } else if (!this.Sub_Type.equals(d.Sub_Type)) {
+            return this.Sub_Type.compareTo(d.Sub_Type);
+        } else if (!this.Category.equals(d.Category)) {
+            return this.Category.compareTo(d.Category);
+        }
+        return this.Location.compareTo(d.Location);
     }
 
     public String getMessage() {

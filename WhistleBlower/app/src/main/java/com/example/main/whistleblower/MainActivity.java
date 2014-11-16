@@ -76,16 +76,20 @@ public class MainActivity extends FragmentActivity {
             case R.id.post_message:
                 startActivity(new Intent(MainActivity.this, PostActivity.class));
                 return true;
+            case R.id.item_data_analysis:
+                startActivity(new Intent(MainActivity.this, AnalysisActivity.class));
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public static Activity getMyActivity(){
+    public static Activity getMyActivity() {
         return myActivity;
     }
 
     /**
      * Handler used for updating the ListView
+     *
      * @return
      */
     public Handler getHandler(){

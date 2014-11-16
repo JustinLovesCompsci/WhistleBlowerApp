@@ -20,12 +20,19 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class PostActivity extends Activity {
 
     private Data myData;
+    private double myLongitude;
+    private double myLatitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +71,18 @@ public class PostActivity extends Activity {
                 myData.setCategory(category.toString());
                 myData.setMessage(((EditText) findViewById(R.id.message_box)).getText().toString());
                 myData.setLocation("1.0:1.0");//TODO: set location
+
+                //TODO: check
+//                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//                double longitude = location.getLongitude();
+//                double latitude = location.getLatitude();
+//                myData.setLocation(longitude + Util.SEPARATOR + latitude);
+
                 if (!validate()) {
                     showNonFilledDialog();
                 }
-                new SubmissionTask().execute("");//TODO:url
+                new SubmissionTask().execute("");
             }
         });
     }
@@ -179,8 +194,34 @@ public class PostActivity extends Activity {
         }
     }
 
-    public String post(String url, JSONObject json) {
-        return null;//TODO
+    private String post(String url, JSONObject jsonObj) {
+        try {
+            URL obj = new URL(url);
+            HttpsURLConnection conn = (HttpsURLConnection) obj.openConnection();
+
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Accept", "application/json");
+
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            wr.writeBytes(jsonObj.toString());
+            wr.flush();
+            wr.close();
+
+            int responseCode = conn.getResponseCode();
+
+            if (responseCode != 200) {
+                Log.w("PostActivity", conn.toString());
+                Log.w("PostActivity", "Some Error Happened Getting the Data! " + responseCode);
+//                System.exit(0);
+            }
+            conn.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();//TODO
+        }
+        return "Success";
     }
 
     private class SubmissionTask extends AsyncTask<String, Void, String> {

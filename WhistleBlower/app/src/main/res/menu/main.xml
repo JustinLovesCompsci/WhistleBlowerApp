@@ -8,6 +8,12 @@
         android:showAsAction="never" />
 
     <item
+        android:id="@+id/item_data_analysis"
+        android:title="Analysis"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+
+    <item
         android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"
